@@ -1,1 +1,19 @@
-﻿<h1>Hello My NAME IS SAMEER</h1>
+﻿@model Category
+
+<div>
+    <h2>Create Category</h2> 
+    <form asp-action="Create" method="post">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+
+        <label asp-for="DisplayOrder"></label>
+        <input asp-for="DisplayOrder" class="form-control"/>
+        <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+
+        <div class="mt-15">
+            <button type="submit">Submit</button>
+            <button asp-controller="Category" asp-action="Index">Back</button>
+        </div>  
+    </form>
+</div>
