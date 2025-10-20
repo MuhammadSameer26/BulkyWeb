@@ -1,10 +1,10 @@
 ﻿@model Category
 
-
-<form asp-action="Create">
+<form asp-action="Edit">
     <div class="">
-        <h2>Create Category</h2>
+        <h2>Edit Category</h2>
     </div>
+    <partial name="_Notification" />
     <div asp-validation-summary="ModelOnly"></div>
 
     <div class="mb-3">
@@ -19,7 +19,7 @@
         <span asp-validation-for="DisplayOrder" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Update</button>
     <button asp-controller="Category" class="btn btn-primary" asp-action="index">Back</button>
 </form>
 

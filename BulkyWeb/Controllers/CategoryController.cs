@@ -1,19 +1,21 @@
-﻿using BulkyWeb.data;
-using Microsoft.AspNetCore.Mvc;
-using BulkyWeb.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Bulky.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Bulky.DataAccess.Data;
+using Bulky.DataAccess.Repository.IRepository;
 namespace BulkyWeb.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly ICategoryRepository categoryRepository;
 
-        public CategoryController(ApplicationDbContext db)
+        public CategoryController(ICategoryRepository repository)
         {
-            _db = db;
+            categoryRepository = repository;
         }
         public IActionResult Index()
         {
-            List<Category> objCategoryList = _db.Categories.ToList();
+           IEnumerable<Category> objCategoryList = categoryRepository.GetALL();
 
             return View(objCategoryList);       
         }
@@ -24,13 +26,72 @@ namespace BulkyWeb.Controllers
            return View();
         }
 
+
         [HttpPost]
         public IActionResult Create(Category obj)
         {
-            _db.Categories.Add(obj);
-            _db.SaveChanges();
+            if(obj.Name == obj.DisplayOrder.ToString())
+            {
+               ModelState.AddModelError("name", "The Display order cannot exactly match the Name.");
+            }
+            
+            if (ModelState.IsValid)
+            {
+               categoryRepository.Add(obj);
+               categoryRepository.Save();
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
 
+        public IActionResult Edit(int id)
+        {
+            if(id==0 || id == null)
+            {
+                return NotFound();
+            }
+            var CategoryFromDb = categoryRepository.Get(id);
+
+            return View(CategoryFromDb);
+        }
+        [HttpPost]
+        public IActionResult Edit(Category obj)
+        {
+            if (ModelState.IsValid)
+            {
+                categoryRepository.Update(obj);
+                categoryRepository.Save();
+                TempData["sucess"] = "Category Updated successfuly";
+
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if(id==0 || id==null)
+            {
+                return NotFound();
+            }
+            var foundId = categoryRepository.Get(id.Value);
+
+            return View(foundId);
+        }
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeletePost(int id) 
+        {
+            Category? obj = categoryRepository.Get(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            categoryRepository.Remove(obj);
+            categoryRepository.Save();
+            TempData["sucess"] = "Category Deleted Sucessfully";
             return RedirectToAction("Index");
         }
+       
     }
 }

@@ -1,28 +1,37 @@
 ﻿@model Category
 
 
-<form asp-action="Create">
+
+<form asp-action="Delete">
+    <input asp-for="Id" hidden />
     <div class="">
-        <h2>Create Category</h2>
+        <h2>Delete Category</h2>
+        @if (TempData["sucess"] != null)
+        {
+            <h2>@TempData["sucess"]</h2>
+        }
     </div>
     <div asp-validation-summary="ModelOnly"></div>
 
     <div class="mb-3">
-        <label asp-for="Name" class="form-label"></label>
-        <input asp-for="Name" class="form-control" />
+        <label asp-for="Name"  class="form-label"></label>
+        <input asp-for="Name" disabled class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="DisplayOrder" class="form-label"></label>
-        <input asp-for="DisplayOrder" class="form-control" />
+        <input asp-for="DisplayOrder" disabled class="form-control" />
         <span asp-validation-for="DisplayOrder" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Delete</button>
     <button asp-controller="Category" class="btn btn-primary" asp-action="index">Back</button>
 </form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+
+

@@ -1,29 +1,57 @@
 ﻿@model List<Category>
-<div class="container">
-    <div class="row pt-4 pb-3">
-        <div class="col-6">
-            <h2 class="text-primary"> Category List</h2>
+
+<div class="container py-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-gradient text-white d-flex justify-content-between align-items-center rounded-top-4"
+             style="background: linear-gradient(90deg, #0d6efd, #20c997);">
+            <h3 class="mb-0 fw-bold"><i class="bi bi-list-ul"></i> Category List</h3>
+          <partial name="_Notification" />
+            <a asp-controller="Category" asp-action="Create" class="btn btn-light text-primary fw-semibold shadow-sm">
+                <i class="bi bi-plus-circle"></i> Create New Category
+            </a>
         </div>
-        <div class="col-6 text-end">
-            <a asp-controller="Category" asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Create New Category </a>
+
+        <div class="card-body">
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-primary">
+                            <tr>
+                                <th style="width: 40%;">Name</th>
+                                <th style="width: 20%;">Display Order</th>
+                                <th style="width: 40%;" class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var obj in Model.OrderBy(n => n.Name))
+                            {
+                                <tr>
+                                    <td class="fw-semibold">@obj.Name</td>
+                                    <td>@obj.DisplayOrder</td>
+                                    <td class="text-center">
+                                        <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id"
+                                           class="btn btn-outline-primary btn-sm me-2 rounded-pill shadow-sm">
+                                            <i class="bi bi-pencil-square"></i> Edit
+                                        </a>
+
+                                        <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id"
+                                           class="btn btn-outline-danger btn-sm rounded-pill shadow-sm">
+                                            <i class="bi bi-trash-fill"></i> Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning text-center mt-3" role="alert">
+                    <i class="bi bi-exclamation-circle"></i> No categories found. Click "Create New Category" to add one.
+                </div>
+            }
         </div>
     </div>
-
-<table class="table table-bordered active  table-hover">
-    <tr>
-        <th>Name</th>
-        <th>Display Order</th>
-    </tr>
-    <tbody>
-        @foreach (var obj in Model.OrderBy(n=>n.DisplayOrder))
-        {
-            <tr>
-                <td>@obj.Name</td>
-                <td>@obj.DisplayOrder</td>
-            </tr>
-        }
-    </tbody>
-
-</table> 
-
 </div>
