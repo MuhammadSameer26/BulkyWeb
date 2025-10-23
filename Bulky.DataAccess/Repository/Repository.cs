@@ -30,7 +30,7 @@ namespace Bulky.DataAccess.Repository
 
         public T Get(int id)
         {
-           var foundId = _dbSet.Find(id);
+           T foundId = _dbSet.Find(id);
             return foundId;
         }
 

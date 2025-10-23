@@ -1,14 +1,17 @@
-﻿using System;
+﻿using Bulky.DataAccess.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Bulky.Models;
+
 namespace Bulky.DataAccess.Repository.IRepository
 {
-    public interface I_unitOfWork : IRepository<Category>
+    public interface IUnitOfWork
     {
-        void Update(Category entity);
-        
+       
+        I_unitOfWork Category { get; }
+
+        void Save();
     }
 }
