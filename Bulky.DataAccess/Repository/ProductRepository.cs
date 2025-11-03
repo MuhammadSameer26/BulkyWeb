@@ -9,17 +9,19 @@ using System.Threading.Tasks;
 
 namespace Bulky.DataAccess.Repository
 {
-    public class CategoryRepository : Repository<Category>, ICategoryRepository
+    internal class ProductRepository : Repository<Product>, IProductRepository
     {
-       private  ApplicationDbContext  _db;
-        public CategoryRepository(ApplicationDbContext db) : base(db)
+        private readonly ApplicationDbContext _db;
+        public ProductRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }
-       
-        public void Update(Category entity)
+        
+        public void Update(Product entity)
         {
-           _db.Categories.Update(entity);
+           _db.Products.Update(entity);
         }
+
+      
     }
 }

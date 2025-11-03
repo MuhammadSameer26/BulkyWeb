@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Bulky.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Bulky.Models;
+
 namespace Bulky.DataAccess.Repository.IRepository
 {
-    public interface ICategoryRepository : IRepository<Category>
+    public interface IProductRepository : IRepository<Product>
     {
-        void Update(Category entity);
-        
+        public void Update(Product entity);
     }
 }

@@ -11,11 +11,14 @@ namespace Bulky.DataAccess.Repository
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _db;
-        public I_unitOfWork Category { get; private set; }
+        public ICategoryRepository Category { get; private set; }
+        public IProductRepository Products { get; private set; }
+
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
-            Category = new _unitOfWork(_db);
+            Category = new CategoryRepository(_db);
+            Products = new ProductRepository(_db);
         }
 
         public void Save()
@@ -23,4 +26,5 @@ namespace Bulky.DataAccess.Repository
             _db.SaveChanges();
         }
     }
+
 }

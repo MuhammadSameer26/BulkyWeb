@@ -1,0 +1,50 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model IEnumerable<Product>
+
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white text-center">
+            <h3>📚 Book List</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-hover table-striped align-middle">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>ISBN</th>
+                        <th>Author</th>
+                        <th>List Price</th>
+                        <th>Price (1-50)</th>
+                        <th>Price (50+)</th>
+                        <th>Price (100+)</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <button class="btn btn-danger">Delete</button>
+                            <td>@item.Title</td>
+                            <td>@item.Description</td>
+                            <td>@item.ISBN</td>
+                            <td>@item.Author</td>
+                            <td class="text-end">$@item.ListPrice</td>
+                            <td class="text-end">$@item.Price</td>
+                            <td class="text-end">$@item.Price50</td>
+                            <td class="text-end">$@item.Price100</td>
+                        </tr>
+                    }
+
+                    <!-- Add more rows dynamically from your model -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
